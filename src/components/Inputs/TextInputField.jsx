@@ -28,6 +28,7 @@ const InputField = ({
         placeholder="type here..."
         value={data[name] || ""}
         onChange={(e) => handleField({ [name]: e.target?.value })}
+        name={name}
       />
     </div>
   );

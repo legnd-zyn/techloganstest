@@ -1,5 +1,6 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
       <body className={`${poppins.className} bg-blue-950/10`}>
         <header className="bg-blue-950 p-5"></header>
         {children}
+        <Toaster />
       </body>
     </html>
   );

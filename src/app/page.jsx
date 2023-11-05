@@ -6,15 +6,28 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import WebPresenceForm from "@/components/FormsInputSections/WebPresenceForm";
 import Experience from "@/components/FormsInputSections/Experience";
 import { PagesMetaData } from "@/data";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const [data, setData] = useState(INIT_DATA);
 
   const { currentForm, forward, backward, isLastStep, currentStep } =
     useMultiStepForm([
-      <PersonalInformation dataObj={data} handleField={handleUpdateField} />,
-      <WebPresenceForm dataObj={data} handleField={handleUpdateField} />,
-      <Experience dataObj={data} handleField={handleUpdateField} />,
+      <PersonalInformation
+        key={"rand 1"}
+        dataObj={data}
+        handleField={handleUpdateField}
+      />,
+      <WebPresenceForm
+        key={"rand 2"}
+        dataObj={data}
+        handleField={handleUpdateField}
+      />,
+      <Experience
+        key={"rand 3"}
+        dataObj={data}
+        handleField={handleUpdateField}
+      />,
     ]);
 
   function handleUpdateField(dataObj) {
@@ -26,7 +39,39 @@ export default function Home() {
     if (!isLastStep) {
       return forward();
     }
-    return console.log(data);
+
+    Submit(data);
+  }
+
+  async function Submit(data) {
+    var formData = new FormData();
+
+    for (let key in data) {
+      const value = data[key] || null;
+      console.log(value);
+      formData.append(key, value);
+    }
+
+    try {
+      const SHEET_URI = process?.env?.NEXT_PUBLIC_SHEET_URI;
+      // if (!SHEET_URI) {
+      //   toast.error("No URI founded");
+      //   throw Error("No URI founded");
+      // }
+      const res = await fetch(SHEET_URI, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+      }
+      toast.success("Data Added successfully!");
+    } catch (error) {
+      console.log("error in catch block", error);
+      toast.error("Something wen't wrong, please try again");
+    }
   }
 
   return (
@@ -69,7 +114,7 @@ export default function Home() {
                 } -top-[1.85rem] self-center md:top-0 md:-left-[1.90rem] rounded-full`}
               >
                 {ind + 1}
-              </span>{" "}
+              </span>
               <span className="text-xs">{title}</span>
             </li>
           ))}
@@ -92,4 +137,7 @@ const INIT_DATA = {
   github: "",
   website: "",
   references: "",
+  experience: "",
+  expertise: "",
+  other: "",
 };
