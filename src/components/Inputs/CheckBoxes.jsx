@@ -7,10 +7,13 @@ const CheckBoxField = ({
   description,
   required,
   handleField,
+  data,
 }) => {
-  const [expertiseList, setExpertiseList] = useState([]);
+  const [expertiseList, setExpertiseList] = useState(
+    data[name]?.split(",") || []
+  );
 
-  function handleChange(event, value) {
+  function handleChange(value) {
     const optionLabel = value;
 
     if (expertiseList.includes(optionLabel)) {
@@ -43,7 +46,7 @@ const CheckBoxField = ({
             required={!!required}
             className="cursor-pointer"
             value={"Check Here"}
-            onChange={(e) => handleChange(e, title)}
+            onChange={(e) => handleChange(title)}
             checked={expertiseList.includes(title)}
           />
           <label htmlFor={title} className="cursor-pointer">

@@ -1,7 +1,7 @@
 import React, { useEffect, useId, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
-const DropDownInput = ({ label, name, description, handleField }) => {
+const DropDownInput = ({ label, name, description, handleField, data }) => {
   return (
     <div className="relative pl-10 flex flex-col gap-5 mt-5">
       <div className="relative flex items-center">
@@ -11,7 +11,7 @@ const DropDownInput = ({ label, name, description, handleField }) => {
       {description && (
         <p className="text-blue-950/70 font-medium">{description}</p>
       )}
-      <DropDown name={name} handleField={handleField} />
+      <DropDown name={name} handleField={handleField} data={data} />
     </div>
   );
 };
@@ -20,9 +20,10 @@ const DropDown = ({
   listArray = ["One to less", "One to three", "Three or more"],
   handleField,
   name,
+  data,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [title, setTitle] = useState("select");
+  const [title, setTitle] = useState(data[name] || "");
 
   function handleValueChange(value) {
     setIsVisible(false);
@@ -40,7 +41,7 @@ const DropDown = ({
         onClick={() => setIsVisible(true)}
       >
         {" "}
-        {title} <FiChevronDown />{" "}
+        {title || "Select"} <FiChevronDown />{" "}
       </p>
       {isVisible && (
         <div className="absolute bg-white w-full h-max z-10 text-left border border-blue-950/20 border-t-transparent max-h-48 overflow-y-auto flex flex-col gap-1 rounded-sm p-1">

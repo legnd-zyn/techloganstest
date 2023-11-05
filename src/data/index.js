@@ -82,3 +82,9 @@ export const webPresenceFormFields = [
       "Do you have any other references you would like to share? Mentions to your work, articles, or any other relevant references you would like to share? Feel free to enter one URL per line.",
   },
 ];
+
+export const PagesMetaData = [
+  "Personal Information",
+  "Web Presence",
+  "Personal Information",
+];

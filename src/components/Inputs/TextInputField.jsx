@@ -1,6 +1,13 @@
 const { useId } = require("react");
 
-const InputField = ({ name, label, description, required, handleField }) => {
+const InputField = ({
+  name,
+  label,
+  description,
+  required,
+  handleField,
+  data,
+}) => {
   const ID = useId();
   return (
     <div className="relative pl-10 flex flex-col gap-5 mt-5">
@@ -19,6 +26,7 @@ const InputField = ({ name, label, description, required, handleField }) => {
         required={!!required}
         className="px-4 py-2 rounded-md outline-none border border-blue-950/10 text-sm focus-within:border-blue-950/30"
         placeholder="type here..."
+        value={data[name] || ""}
         onChange={(e) => handleField({ [name]: e.target?.value })}
       />
     </div>

@@ -4,7 +4,7 @@ import FormWrapper from "../FormWrapper";
 import CheckBoxField from "../Inputs/CheckBoxes";
 import InputField from "../Inputs/TextInputField";
 
-const Experience = ({ handleField }) => {
+const Experience = ({ handleField, dataObj }) => {
   return (
     <FormWrapper
       title="Personal Information"
@@ -14,6 +14,7 @@ const Experience = ({ handleField }) => {
         label="How many years of relevant experience?"
         name="experience"
         handleField={handleField}
+        data={dataObj}
       />
       <CheckBoxField
         arrayList={[
@@ -26,11 +27,13 @@ const Experience = ({ handleField }) => {
         label={"What domain is your expertise in?"}
         name={"expertise"}
         handleField={handleField}
+        data={dataObj}
       />
       <InputField
         label="Other expert skills?"
         name="other"
         handleField={handleField}
+        data={dataObj}
       />
     </FormWrapper>
   );
