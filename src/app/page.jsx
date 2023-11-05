@@ -79,6 +79,7 @@ export default function Home() {
       setData(INIT_DATA);
       setComponentsStep(0);
       setIsSubmitting(false);
+      window.scrollTo(0, 0);
     } catch (error) {
       console.log("error in catch block", error);
       toast.error("Something wen't wrong, please try again");
