@@ -25,5 +25,6 @@ export function useMultiStepForm(components) {
     isFirstStep: components.lenght - 1 === 0,
     isLastStep: componentsStep === components.length - 1,
     currentStep: componentsStep,
+    setComponentsStep,
   };
 }

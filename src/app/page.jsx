@@ -10,25 +10,32 @@ import toast from "react-hot-toast";
 
 export default function Home() {
   const [data, setData] = useState(INIT_DATA);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { currentForm, forward, backward, isLastStep, currentStep } =
-    useMultiStepForm([
-      <PersonalInformation
-        key={"rand 1"}
-        dataObj={data}
-        handleField={handleUpdateField}
-      />,
-      <WebPresenceForm
-        key={"rand 2"}
-        dataObj={data}
-        handleField={handleUpdateField}
-      />,
-      <Experience
-        key={"rand 3"}
-        dataObj={data}
-        handleField={handleUpdateField}
-      />,
-    ]);
+  const {
+    currentForm,
+    forward,
+    backward,
+    isLastStep,
+    currentStep,
+    setComponentsStep,
+  } = useMultiStepForm([
+    <PersonalInformation
+      key={"rand 1"}
+      dataObj={data}
+      handleField={handleUpdateField}
+    />,
+    <WebPresenceForm
+      key={"rand 2"}
+      dataObj={data}
+      handleField={handleUpdateField}
+    />,
+    <Experience
+      key={"rand 3"}
+      dataObj={data}
+      handleField={handleUpdateField}
+    />,
+  ]);
 
   function handleUpdateField(dataObj) {
     setData((prev) => ({ ...prev, ...dataObj }));
@@ -44,6 +51,7 @@ export default function Home() {
   }
 
   async function Submit(data) {
+    setIsSubmitting(true);
     var formData = new FormData();
 
     for (let key in data) {
@@ -68,9 +76,13 @@ export default function Home() {
         console.log(data);
       }
       toast.success("Data Added successfully!");
+      setData(INIT_DATA);
+      setComponentsStep(0);
+      setIsSubmitting(false);
     } catch (error) {
       console.log("error in catch block", error);
       toast.error("Something wen't wrong, please try again");
+      setIsSubmitting(false);
     }
   }
 
@@ -90,7 +102,8 @@ export default function Home() {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-950 font-bold text-white rounded-sm text-sm active:scale-95 transition-all"
+              className="px-4 py-2 bg-blue-950 font-bold text-white rounded-sm text-sm active:scale-95 transition-all disabled:bg-blue-800 disabled:opacity-60"
+              disabled={isSubmitting}
             >
               {isLastStep ? "Submit" : "Next"}
             </button>
